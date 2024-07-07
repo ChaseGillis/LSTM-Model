@@ -25,7 +25,7 @@ closing_prices = btc_data['Close']
 closing_prices_scaled = scaler.fit_transform(np.array(closing_prices).reshape(-1, 1))
 
 # Load the saved model
-model = load_model('btc_lstm_model.h5')
+model = load_model('btc_lstm_model.keras')
 
 # Predict ROI for the next 7 days
 inputs = closing_prices_scaled[-time_step:]

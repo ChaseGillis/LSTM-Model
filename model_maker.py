@@ -47,4 +47,4 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(X_train, y_train, epochs=50, batch_size=32)
 
 # Save the trained model
-model.save('btc_lstm_model.h5')
+model.save('btc_lstm_model.keras')

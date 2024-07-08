@@ -31,15 +31,10 @@ model = load_model('btc_lstm_model.keras')
 inputs = closing_prices_scaled[-time_step:]
 inputs = inputs.reshape(1, time_step, 1)
 
-predicted_prices = []
-for i in range(7):
-    prediction = model.predict(inputs).item()
-    predicted_prices.append(prediction)
-    inputs = np.concatenate((inputs[:, 1:, :], np.array([[prediction]])[:, np.newaxis, :]), axis=1)
-
-# Inverse transform predicted prices to get actual prices
+predicted_prices = model.predict(inputs)
 predicted_prices = np.array(predicted_prices).reshape(-1, 1)
 predicted_prices = scaler.inverse_transform(predicted_prices)
+
 
 # Calculate predicted ROIs (example calculation, adjust as needed)
 predicted_roi = []

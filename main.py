@@ -79,8 +79,10 @@ for i in range(len(predicted_prices) - 1):
 initial_roi = ((predicted_prices[0] - closing_prices.iloc[-1]) / closing_prices.iloc[-1]) * 100
 predicted_roi.insert(0, initial_roi)  # Insert initial ROI at the beginning of the list
 
+init_price = closing_prices.iloc[-1]
+
 # Print predicted ROIs and prices
-print(f"Last Price: {closing_prices.iloc[-1]}")
+print(f"Last Price: {init_price}")
 print("Predicted ROIs for the next 7 days:")
 for i, roi in enumerate(predicted_roi, start=1):
     print(f"Day {i}: {roi[0]:.3f}%")
@@ -88,10 +90,12 @@ for i, roi in enumerate(predicted_roi, start=1):
 print()
 print("Predicted Prices for the next 7 days:")
 for i, price in enumerate(predicted_prices, start=1):
+    if i == 7:
+        fin_price = price[0]
     print(f"Day {i}: ${price[0]:.2f}")
 
 # Determine forecasted state based on the last predicted ROI
-forecasted_roi = predicted_roi[-1][0]
+forecasted_roi = ((fin_price - init_price) / init_price) * 100
 
 if forecasted_roi <= -8:
     forecasted_state = "Strong Bear"
